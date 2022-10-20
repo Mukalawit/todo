@@ -18,52 +18,44 @@ module.exports = {
       .query(`SELECT * FROM tasks ORDER BY id ASC`)
       .then((response) => {
         const data = response.rows;
-        const renderedItems = data
-          .map((item) => {
-            return `<li>Task name:${item.name}</li>`;
-          })
-          .join("");
 
-        return `<ul>${renderedItems}</ul>`;
+        return data;
+       
       })
       .catch((error) => `${error}`);
   },
 
-  updateTask(req, res) {
+  updateTask(name , description , id) {
     client
       .query(`UPDATE tasks SET "name"=$1,"description"=$2 WHERE "id"=$3`, [
-        req.body.taskName,
-        req.body.taskDescription,
-        req.params.id,
+        name,
+        description,
+        id,
       ])
       .then((response) => {
-        res.redirect("/tasks");
+        return response;
       });
   },
 
-  showTaskToUpdate(req, res) {
+  showTaskToUpdate(id) {
     return client
-      .query(`SELECT * FROM tasks WHERE id = $1`, [req.params.id])
+      .query(`SELECT * FROM tasks WHERE id = $1`, [id])
       .then((response) => {
         const data = response.rows;
-        const renderedItem = data.map((item) => {
-          return `<label>Task name<input name="taskName" value="${item.name}" /> <label>Task description</label><textarea name="taskDescription" />${item.description}</textarea>`;
-        });
 
-        res.send(
-          `<form method="POST">${renderedItem}<button>Update</button></form>`
-        );
+        return data;
+        
       });
   },
 
-  addTask(req, res) {
+  addTask(name , description) {
     client
       .query(`INSERT INTO tasks(name , description) VALUES($1,$2)`, [
-        req.body.taskName,
-        req.body.taskDescription,
+        name,
+        description
       ])
       .then((response) => {
-        res.redirect("/tasks");
+        return response;
       });
   },
 };
