@@ -12,6 +12,7 @@ const {
   viewTasks,
   updateTask,
   showTaskToUpdate,
+  deleteTask,
 } = require("./models/tasks");
 
 const app = express();
@@ -70,6 +71,12 @@ app.get("/update/:id", (req, res) => {
   });
 });
 
+app.post("/delete/:id" , async (req,res)=>{
+
+  await deleteTask(req.params.id)
+  res.redirect('/tasks')
+ 
+ })
 app.listen(3000, () => {
   console.log("Listening");
 });
