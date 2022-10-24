@@ -13,9 +13,11 @@ const client = new Client({
 client.connect();
 
 module.exports = {
+
   viewTasks() {
+    let status = 1;
     return client
-      .query(`SELECT * FROM tasks ORDER BY id ASC`)
+      .query(`SELECT * FROM tasks  WHERE "status" = $1 ORDER BY id ASC`,[status])
       .then((response) => {
         const data = response.rows;
 
@@ -36,8 +38,9 @@ module.exports = {
   },
 
   showTaskToUpdate(id) {
+    let status = 1;
     return client
-      .query(`SELECT * FROM tasks WHERE id = $1`, [id])
+      .query(`SELECT * FROM tasks WHERE id = $1 AND status =$2`, [id , status])
       .then((response) => {
         const data = response.rows;
 
@@ -47,10 +50,12 @@ module.exports = {
   },
 
   addTask(name , description) {
+    let status = 1;
     client
-      .query(`INSERT INTO tasks(name , description) VALUES($1,$2)`, [
+      .query(`INSERT INTO tasks(name , description , status) VALUES($1,$2,$3)`, [
         name,
-        description
+        description,
+        status
       ])
       .then((response) => {
         return response;
