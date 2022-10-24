@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const { validationResult } = require("express-validator");
 
 const { requireTaskName, requireTaskDescription } = require("./validators");
-const handleErrors = require('./handleErrors')
 const addTaskTemplate = require("./templates/addTaskTemplate");
 const updateTaskTemplate = require("./templates/updateTaskTemplate");
 const displayTaskTemplate = require("./templates/displayTaskTemplate");
@@ -36,25 +35,24 @@ app.post("/", [requireTaskName, requireTaskDescription], (req, res) => {
 
 app.get("/tasks", async (req, res) => {
   const response = await viewTasks();
-
-  res.send(displayTaskTemplate(response));
+ res.send(displayTaskTemplate(response));
 });
 
 app.post(
   "/update/:id",
   [requireTaskName, requireTaskDescription],
-  //handleErrors,
+
   async (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
     const errors = validationResult(req);
     const { id } = req.params;
-    // console.log(errors)
+  
     if (!errors.isEmpty()) {
-      console.log(errors.array())
+      console.log(errors.array());
       showTaskToUpdate(id).then((response) => {
         res.send(updateTaskTemplate(response, errors));
       });
-      return
+      return;
     }
     const { taskName, taskDescription } = req.body;
     await updateTask(taskName, taskDescription, id);
@@ -62,7 +60,7 @@ app.post(
   }
 );
 
-// Why do we have a get method on update
+
 
 app.get("/update/:id", (req, res) => {
   const { id } = req.params;
@@ -77,6 +75,7 @@ app.post("/delete/:id" , async (req,res)=>{
   res.redirect('/tasks')
  
  })
+
 app.listen(3000, () => {
   console.log("Listening");
 });
