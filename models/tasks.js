@@ -56,4 +56,9 @@ module.exports = {
         return response;
       });
   },
+  deleteTask(id){
+    let status = 0;
+    client.query(`UPDATE tasks SET "status" = $1 WHERE "id" = $2 RETURNING id`,[status , id]).then(response=>response.rows)
+    
+  }
 };
