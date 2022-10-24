@@ -32,9 +32,7 @@ module.exports = {
         description,
         id,
       ])
-      .then((response) => {
-        return response;
-      });
+      
   },
 
   showTaskToUpdate(id) {
