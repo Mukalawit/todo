@@ -3,7 +3,11 @@ const bodyParser = require("body-parser");
 const { validationResult } = require("express-validator");
 
 const { requireTaskName, requireTaskDescription } = require("./validators");
-const {addTaskTemplate,displayTaskTemplate,updateTaskTemplate }= require("./templates");
+const {
+  addTaskTemplate,
+  displayTaskTemplate,
+  updateTaskTemplate,
+} = require("./templates");
 const {
   addTask,
   viewTasks,
@@ -33,7 +37,7 @@ app.post("/", [requireTaskName, requireTaskDescription], (req, res) => {
 
 app.get("/tasks", async (req, res) => {
   const response = await viewTasks();
- res.send(displayTaskTemplate(response));
+  res.send(displayTaskTemplate(response));
 });
 
 app.post(
@@ -44,7 +48,7 @@ app.post(
     console.log(req.body);
     const errors = validationResult(req);
     const { id } = req.params;
-  
+
     if (!errors.isEmpty()) {
       console.log(errors.array());
       showTaskToUpdate(id).then((response) => {
@@ -58,8 +62,6 @@ app.post(
   }
 );
 
-
-
 app.get("/update/:id", (req, res) => {
   const { id } = req.params;
   showTaskToUpdate(id).then((response) => {
@@ -67,12 +69,10 @@ app.get("/update/:id", (req, res) => {
   });
 });
 
-app.post("/delete/:id" , async (req,res)=>{
-
-  await deleteTask(req.params.id)
-  res.redirect('/tasks')
- 
- })
+app.post("/delete/:id", async (req, res) => {
+  await deleteTask(req.params.id);
+  res.redirect("/tasks");
+});
 
 app.listen(3000, () => {
   console.log("Listening");
