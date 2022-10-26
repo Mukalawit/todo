@@ -6,12 +6,7 @@ module.exports = ({ content }) => {
     <title>Task Manager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
-    <style>
-    .list-actions{
-      display:flex;
-      margin:5px;
-    }
-    </style>
+    
     </head>
     
     <body>
