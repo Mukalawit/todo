@@ -17,7 +17,7 @@ module.exports = {
   viewTasks() {
     let status = 1;
     return client
-      .query(`SELECT * FROM tasks  WHERE "status" = $1 ORDER BY id ASC`,[status])
+      .query(`SELECT * FROM tasks  WHERE "status" = $1 ORDER BY id DESC`,[status])
       .then((response) => {
         const data = response.rows;
 
