@@ -3,9 +3,7 @@ const bodyParser = require("body-parser");
 const { validationResult } = require("express-validator");
 
 const { requireTaskName, requireTaskDescription } = require("./validators");
-const addTaskTemplate = require("./templates/addTaskTemplate");
-const updateTaskTemplate = require("./templates/updateTaskTemplate");
-const displayTaskTemplate = require("./templates/displayTaskTemplate");
+const {addTaskTemplate,displayTaskTemplate,updateTaskTemplate }= require("./templates");
 const {
   addTask,
   viewTasks,
@@ -25,7 +23,7 @@ app.post("/", [requireTaskName, requireTaskDescription], (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    res.send(addTaskTemplate({ req, errors }));
+    res.send(addTask({ req, errors }));
   }
 
   const { taskName, taskDescription } = req.body;
@@ -65,7 +63,7 @@ app.post(
 app.get("/update/:id", (req, res) => {
   const { id } = req.params;
   showTaskToUpdate(id).then((response) => {
-    res.send(updateTaskTemplate(response));
+    res.send(updateTask(response));
   });
 });
 
