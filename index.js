@@ -65,7 +65,7 @@ app.post(
 app.get("/update/:id", (req, res) => {
   const { id } = req.params;
   showTaskToUpdate(id).then((response) => {
-    res.send(updateTask(response));
+    res.send(updateTaskTemplate(response));
   });
 });
 
