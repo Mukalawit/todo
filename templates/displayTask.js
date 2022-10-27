@@ -3,12 +3,15 @@ const layout = require("./layout");
 module.exports = (data) => {
   const renderedItems = data
     .map((item) => {
+      const str = item.name
+      const str2 = str.charAt(0).toUpperCase() + str.slice(1);
       return `
       <div class="column is-one-fifth">
       <div class="card">
           <header class="card-header is-primary">
             <p class="card-header-title">
-              Task: ${item.name}
+            
+               ${str2}
             </p>
           </header>
           <div class="card-content">
@@ -19,7 +22,7 @@ module.exports = (data) => {
           <footer class="card-footer">
             <div class="card-footer-item"><a href="/update/${item.id}" class="button">Edit</a></div>
             <div class="card-footer-item"><form method="POST" action='/delete/${item.id}'>
-            <button class="button">delete</button></form></div>
+            <button class="button is-danger">Delete</button></form></div>
           </footer>
         </div>
         </div>
