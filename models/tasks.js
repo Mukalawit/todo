@@ -13,57 +13,57 @@ const client = new Client({
 client.connect();
 
 module.exports = {
+
   viewTasks() {
+    let status = 1;
     return client
-      .query(`SELECT * FROM tasks ORDER BY id ASC`)
+      .query(`SELECT * FROM tasks  WHERE "status" = $1 ORDER BY id DESC`,[status])
       .then((response) => {
         const data = response.rows;
-        const renderedItems = data
-          .map((item) => {
-            return `<li>Task name:${item.name}</li>`;
-          })
-          .join("");
 
-        return `<ul>${renderedItems}</ul>`;
+        return data;
+       
       })
       .catch((error) => `${error}`);
   },
 
-  updateTask(req, res) {
+  updateTask(name , description , id) {
     client
       .query(`UPDATE tasks SET "name"=$1,"description"=$2 WHERE "id"=$3`, [
-        req.body.taskName,
-        req.body.taskDescription,
-        req.params.id,
+        name,
+        description,
+        id,
       ])
-      .then((response) => {
-        res.redirect("/tasks");
-      });
+      
   },
 
-  showTaskToUpdate(req, res) {
+  showTaskToUpdate(id) {
+    let status = 1;
     return client
-      .query(`SELECT * FROM tasks WHERE id = $1`, [req.params.id])
+      .query(`SELECT * FROM tasks WHERE id = $1 AND status =$2`, [id , status])
       .then((response) => {
         const data = response.rows;
-        const renderedItem = data.map((item) => {
-          return `<label>Task name<input name="taskName" value="${item.name}" /> <label>Task description</label><textarea name="taskDescription" />${item.description}</textarea>`;
-        });
 
-        res.send(
-          `<form method="POST">${renderedItem}<button>Update</button></form>`
-        );
+        return data;
+        
       });
   },
 
-  addTask(req, res) {
+  addTask(name , description) {
+    let status = 1;
     client
-      .query(`INSERT INTO tasks(name , description) VALUES($1,$2)`, [
-        req.body.taskName,
-        req.body.taskDescription,
+      .query(`INSERT INTO tasks(name , description , status) VALUES($1,$2,$3)`, [
+        name,
+        description,
+        status
       ])
       .then((response) => {
-        res.redirect("/tasks");
+        return response;
       });
   },
+  deleteTask(id){
+    let status = 0;
+    client.query(`UPDATE tasks SET "status" = $1 WHERE "id" = $2 RETURNING id`,[status , id]).then(response=>response.rows)
+    
+  }
 };
