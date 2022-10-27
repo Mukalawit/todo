@@ -11,10 +11,10 @@ const getErrors = (errors, prop) => {
 module.exports = (data, errors) => {
   const renderedItem = data.map((item) => {
     return `
-        <label>Task name</label><input name="taskName" class="input" value="${
+        <label class="label">Task name</label><input name="taskName" class="input" value="${
           item.name
         }" />${getErrors(errors, "taskName")} 
-        <label>Task description</label><textarea class="textarea" name="taskDescription" rows="10">${
+        <label class="label">Task description</label><textarea class="textarea" name="taskDescription" rows="10">${
           item.description}</textarea>
         ${getErrors(errors, "taskDescription")}`;
   });
