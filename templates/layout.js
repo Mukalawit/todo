@@ -6,15 +6,22 @@ module.exports = ({ content }) => {
     <title>Task Manager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
-    
+    <style>
+    .nav-items{
+      display:flex;
+      justify-content:space-between;
+    }
+    </style>
     </head>
     
     <body>
     <div class="hero">
-      <div class="notification is-info">
+      <div class="notification is-info nav-items">
         <strong>TASK MANAGER</strong>
-        <a href="/">Add a Task</a>
-        <a href="/tasks">View Tasks</a>
+        <div class="">
+        <a href="/" class="button">Add a Task</a>
+        <a href="/tasks" class="button">View Tasks</a>
+        </div>
       </div>
     </div>
     <div class="content">
