@@ -2,25 +2,29 @@
 This app helps with managing personal tasks
 
 ## Project description
-You can create , update , read and delete any task
+The app makes it possible to create , update , read and delete tasks
 
-### How to install and run the project
+## Getting Started
 
 1.Install postgres on your local machine
 
-2.create todo database
+2.Run the `dbSetup.sql` script to setup the database on your local machine
 
-3.create tasks table with 
+3.Clone this respository
 
-```SQL
-CREATE TABLE tasks( id SERIAL PRIMARY KEY,name VARCHAR(100) NOT NULL,description TEXT NOT NULL);
 ```
-4.Create todo folder in your workspace directory and clone the repository from github
-
-5.install express and nodemon
-6.Run >> npm run dev 
-7.Your project has started
+git clone https://github.com/Mukalawit/todo.git
 ```
 
-### How to use the project
+4. Install dependencies
+
+```
+npm install
+```
+
+5.Start server
+```
+npm run dev
+```
+
 
